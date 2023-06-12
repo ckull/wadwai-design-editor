@@ -1,10 +1,12 @@
 import { atom } from 'jotai';
 import { EditorType } from 'src/interfaces/editor';
 
-export const editorAtom = atom({
+const canvasAtom = atom({
     canvas: null,
     workArea: null,
-    backgroundImage: null,
+    backgroundImage: '/black-shirt.jpg',
     activeObject: null,
     zoomRatio: null,
 });
+
+export default canvasAtom

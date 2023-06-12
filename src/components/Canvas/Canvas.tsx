@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import useCanvasContext from 'src/components/Canvas/hooks/useCanvasContext'
 import { fabric } from 'fabric'
 import useEditor from 'src/hooks/useEditor'
+
 import {
   useCustomizationHandler,
   useEventsHandler,
@@ -13,8 +14,8 @@ import {
 function Canvas() {
   const containerRef = useContainerHandler()
   const { setCanvas } = useCanvasContext()
-  const { editor, setEditor } = useEditor()
-
+  const { editor , setEditor } = useEditor()
+  const { backgroundImage } = editor
   useCustomizationHandler()
   useGuidelinesHandler()
   useEventsHandler()
@@ -29,18 +30,36 @@ function Canvas() {
       width: initialWidth,
     })
 
-    // setCanvas(canvas)
    
     const workArea = new fabric.Rect({
       //@ts-ignore
       id: 'workarea',
-      width: 600,
+      width: 250,
       height: 400,
       absolutePositioned: true,
-      fill: '#ffffff',
+      stroke: 'white',
+      fill: 'transparent',
+      strokeWidth: 1,
       selectable: false,
       hoverCursor: 'default',
+      objectCaching: false,
+      controlsAboveOverlay: true,
     })
+
+    fabric.Image.fromURL(backgroundImage, (shirtImage) => {
+      let shirtImageScaleFactor = Math.min(
+        canvas.width / shirtImage.getScaledWidth(),
+        canvas.height / shirtImage.getScaledHeight()
+      );
+      canvas.add(shirtImage);
+      shirtImage.scale(shirtImageScaleFactor);
+      shirtImage.lockMovementX = true
+      shirtImage.sendToBack()
+      shirtImage.selectable = false;
+      shirtImage.lockMovementY = true
+      shirtImage.center()
+    })
+
     canvas.add(workArea)
     workArea.center()
 

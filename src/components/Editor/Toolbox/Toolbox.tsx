@@ -1,11 +1,11 @@
 import { useCanvasContext } from 'src/components/Canvas/hooks'
 import DefaultToolbox from './DefaultToolbox/DefaultToolbox'
 import TextToolbox from './TextToolbox/TextToolbox'
-
+import useEditor from 'src/hooks/useEditor'
 import './Toolbox.scss'
 
 function Toolbox() {
-  const { activeObject } = useCanvasContext()
+  const { editor: {activeObject} } = useEditor()
   if (!activeObject) {
     return <DefaultToolbox />
   }

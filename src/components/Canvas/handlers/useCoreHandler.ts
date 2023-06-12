@@ -5,7 +5,7 @@ import { propertiesToInclude } from '../constants/contants'
 import useEditor from 'src/hooks/useEditor'
 
 function useCoreHandler() {
-  const { editor: {canvas, activeObject} } = useEditor()
+  const { editor: {canvas, activeObject, workArea} } = useEditor()
 
 
   // Add objects to canvas
@@ -21,6 +21,15 @@ function useCoreHandler() {
       element.clipPath = workarea
       canvas.renderAll()
     },
+    [canvas]
+  )
+
+  const removeObject = useCallback(
+    () => {
+      console.log('remove', activeObject)
+
+      canvas.remove(activeObject)
+    }, 
     [canvas]
   )
 
@@ -64,7 +73,7 @@ function useCoreHandler() {
     [canvas]
   )
 
-  return { exportJSON, loadJSON, setCanvasBackgroundColor, addObject, setProperty }
+  return { exportJSON, loadJSON, setCanvasBackgroundColor, addObject, removeObject, setProperty }
 }
 
 export default useCoreHandler

@@ -4,8 +4,8 @@ import { useCanvasContext } from 'src/components/Canvas/hooks'
 import { useEffect, useState } from 'react'
 import { Popover, PopoverTrigger, PopoverContent, PopoverBody } from '@chakra-ui/react'
 import './TextToolbox.scss'
+import { IconButton } from '@chakra-ui/react'
 import { useCoreHandler } from 'src/components/Canvas/handlers'
-
 const fontsList = ['Open Sans', 'Lexend', 'Comic Neue', 'Patrick Hand']
 
 function TextTool() {
@@ -18,6 +18,8 @@ function TextTool() {
     textAlign: 'center',
     textDecoration: 'none',
   })
+
+  const { removeObject } = useCoreHandler()
 
   useEffect(() => {
     if (activeObject) {
@@ -64,8 +66,8 @@ function TextTool() {
           </Popover>
         </div>
         <div className="section-two">
-          <OpacityIcon />
-          <DeleteIcon />
+          <IconButton variant="outline" icon={<OpacityIcon />} />
+          <IconButton variant="outline" onClick={removeObject} icon={<DeleteIcon />} />
         </div>
       </div>
     </div>

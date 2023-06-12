@@ -2,9 +2,11 @@ import { useCallback, useEffect } from 'react'
 import { useCanvasContext } from 'src/components/Canvas/hooks'
 import { isArrow, isCtrlShiftZ, isCtrlZ } from '../utils/keyboard'
 import useEditor from 'src/hooks/useEditor'
+import useCoreHandler from './useCoreHandler'
 function useEventHandlers() {
 
   const {editor, setEditor} = useEditor()
+  const {removeObject} = useCoreHandler()
   const { canvas, activeObject } = editor
   /**
    * Canvas Mouse wheel handler
@@ -28,6 +30,13 @@ function useEventHandlers() {
     },
     [canvas]
   )
+
+  const onDeleteKey = useCallback((event) => {
+    // Key codes for backspace and delete keys
+    if (canvas && event.keyCode === 8 || event.keyCode === 46) {
+      removeObject()
+    }
+  }, [canvas])
 
   useEffect(() => {
     if (canvas) {
@@ -56,6 +65,9 @@ function useEventHandlers() {
     },
     [canvas]
   )
+
+  
+
 
   useEffect(() => {
     if (canvas) {
@@ -133,8 +145,11 @@ function useEventHandlers() {
   )
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown)
+    document.addEventListener('keydown', onDeleteKey)
     return () => {
       document.removeEventListener('keydown', onKeyDown)
+      document.removeEventListener('keydown', onDeleteKey)
+
     }
   }, [canvas, activeObject])
 }

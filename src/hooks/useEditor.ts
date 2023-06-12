@@ -1,8 +1,8 @@
 import { atom, useAtom } from 'jotai';
 import { useState } from 'react';
-import { editorAtom } from 'src/stores/canvasState';
+import  canvasAtom  from 'src/stores/canvasAtom';
 const useEditor = () => {
-    const [editor, setEditor] = useAtom(editorAtom)
+    const [editor, setEditor] = useAtom(canvasAtom)
 
 
     return { editor, setEditor}
