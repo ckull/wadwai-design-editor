@@ -3,13 +3,15 @@ import { useCallback } from 'react'
 import { CanvasObjects } from 'src/components/Canvas'
 import { propertiesToInclude } from '../constants/contants'
 import useEditor from 'src/hooks/useEditor'
-
+import { fabric } from 'fabric'
 function useCoreHandler() {
-  const { editor: {canvas, activeObject, workArea} } = useEditor()
+  const {
+    editor, setEditor
+  } = useEditor()
 
-
-  // Add objects to canvas
-  const addObject = useCallback(
+  const { canvas, activeObject, workArea }
+ = editor  // Add objects to canvas
+  const addText = useCallback(
     options => {
       const { type, ...textOptions } = options
       const element = CanvasObjects[type].render(textOptions)
@@ -24,14 +26,35 @@ function useCoreHandler() {
     [canvas]
   )
 
-  const removeObject = useCallback(
-    () => {
-      console.log('remove', activeObject)
+  const addImage = useCallback(
+    options => {
+      const { type, ...imageOptions } = options
+      const element = CanvasObjects[type].render(imageOptions)
 
-      canvas.remove(activeObject)
-    }, 
+      const workarea = canvas.getObjects().find(obj => obj.id === 'workarea')
+      // Create a fabric.Image from URL
+      fabric.Image.fromURL(imageOptions.src, (img: fabric.Image) => {
+        // Set additional options for the image object
+        img.set(imageOptions)
+    
+
+        // Add the image object to the canvas
+        canvas.add(img)
+        img.center()
+
+        img.clipPath = workarea
+        canvas.renderAll()
+        setEditor({...editor, canvas: canvas})
+      })
+    },
     [canvas]
   )
+
+  const removeObject = useCallback(() => {
+    if (canvas && activeObject) {
+      canvas.remove(activeObject)
+    }
+  }, [canvas, activeObject])
 
   // Update properties, optional set metadata if present
   const setProperty = useCallback(
@@ -73,7 +96,7 @@ function useCoreHandler() {
     [canvas]
   )
 
-  return { exportJSON, loadJSON, setCanvasBackgroundColor, addObject, removeObject, setProperty }
+  return { exportJSON, loadJSON, setCanvasBackgroundColor, addText, removeObject, setProperty, addImage }
 }
 
 export default useCoreHandler

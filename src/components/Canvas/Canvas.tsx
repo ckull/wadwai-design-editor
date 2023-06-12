@@ -9,6 +9,8 @@ import {
   useZoomHandler,
   useContainerHandler,
   useGuidelinesHandler,
+  useGrid,
+  useObjects
 } from 'src/components/Canvas/handlers'
 
 function Canvas() {
@@ -20,6 +22,8 @@ function Canvas() {
   useGuidelinesHandler()
   useEventsHandler()
   useZoomHandler()
+  useGrid()
+  useObjects()
   useEffect(() => {
     const initialHeigh = containerRef.current.clientHeight
     const initialWidth = containerRef.current.clientWidth

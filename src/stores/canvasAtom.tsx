@@ -7,6 +7,7 @@ const canvasAtom = atom({
     backgroundImage: '/black-shirt.jpg',
     activeObject: null,
     zoomRatio: null,
+    objects: null,
 });
 
 export default canvasAtom

@@ -3,7 +3,7 @@ import { SearchIcon } from '@chakra-ui/icons'
 import { useCoreHandler } from 'src/components/Canvas/handlers'
 
 function TextPanel() {
-  const { addObject } = useCoreHandler()
+  const { addText } = useCoreHandler()
   const addHeading = () => {
     const options = {
       type: 'text',
@@ -14,7 +14,7 @@ function TextPanel() {
       fontFamily: 'Lexend',
       textAlign: 'center',
     }
-    addObject(options)
+    addText(options)
   }
 
   const addSubheading = () => {
@@ -27,7 +27,7 @@ function TextPanel() {
       fontFamily: 'Lexend',
       textAlign: 'center',
     }
-    addObject(options)
+    addText(options)
   }
 
   const addTextBody = () => {
@@ -40,7 +40,7 @@ function TextPanel() {
       fontFamily: 'Lexend',
       textAlign: 'center',
     }
-    addObject(options)
+    addText(options)
   }
   return (
     <>
