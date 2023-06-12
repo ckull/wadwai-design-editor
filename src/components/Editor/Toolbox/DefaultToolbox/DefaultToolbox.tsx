@@ -1,7 +1,7 @@
-import { useCoreHandler } from '@/components/Canvas/handlers'
+import { useCoreHandler } from 'src/components/Canvas/handlers'
 import { CSSProperties, useState } from 'react'
 import { TwitterPicker } from 'react-color'
-import emptyColorPlaceholder from '@/assets/images/base-color-picker.png'
+import emptyColorPlaceholder from 'src/assets/images/base-color-picker.png'
 import './DefaultToobox.scss'
 // import './Toolbox.css'
 

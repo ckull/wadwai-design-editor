@@ -3,6 +3,7 @@ import MusicPanel from '../MusicPanel/MusicPanel'
 import ObjectsPanel from '../ObjectsPanel/ObjectsPanel'
 import TemplatesPanel from '../TemplatesPanel/TemplatesPanel'
 import TextPanel from '../TextPanel/TextPanel'
+import LayerPanel from '../LayerPanel'
 import VideosPanel from '../VideosPanel/VideosPanel'
 import { Scrollbars } from 'react-custom-scrollbars'
 import classNames from 'classnames'
@@ -12,6 +13,7 @@ interface Props {
   panelOpen: boolean
   activeTab: string
 }
+
 function PanelItem({ panelOpen, activeTab }: Props) {
   const className = classNames({
     'panel-item-container': true,
@@ -28,9 +30,10 @@ function PanelItem({ panelOpen, activeTab }: Props) {
           {activeTab === 'text' && <TextPanel />}
           {activeTab === 'images' && <ImagesPanel />}
           {activeTab === 'musics' && <MusicPanel />}
-          {activeTab === 'objects' && <ObjectsPanel />}
+          {/* {activeTab === 'objects' && <ObjectsPanel />} */}
           {activeTab === 'templates' && <TemplatesPanel />}
           {activeTab === 'videos' && <VideosPanel />}
+          {activeTab === 'layers' && <LayerPanel />}
         </Scrollbars>
       </div>
     </div>

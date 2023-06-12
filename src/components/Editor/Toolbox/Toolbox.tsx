@@ -1,4 +1,4 @@
-import { useCanvasContext } from '@/components/Canvas/hooks'
+import { useCanvasContext } from 'src/components/Canvas/hooks'
 import DefaultToolbox from './DefaultToolbox/DefaultToolbox'
 import TextToolbox from './TextToolbox/TextToolbox'
 

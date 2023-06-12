@@ -1,10 +1,10 @@
 // @ts-nocheck
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import { useCanvasContext } from '@/components/Canvas/hooks'
+import { useCanvasContext } from 'src/components/Canvas/hooks'
 import { useEffect, useState } from 'react'
 import { Popover, PopoverTrigger, PopoverContent, PopoverBody } from '@chakra-ui/react'
 import './TextToolbox.scss'
-import { useCoreHandler } from '@/components/Canvas/handlers'
+import { useCoreHandler } from 'src/components/Canvas/handlers'
 
 const fontsList = ['Open Sans', 'Lexend', 'Comic Neue', 'Patrick Hand']
 

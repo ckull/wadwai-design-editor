@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
-import { getImage, getImages } from '@services/iconscout'
-import { useCanvasContext } from '@components/Canvas/hooks'
+import { getImage, getImages } from 'src/services/iconscout'
+import { useCanvasContext } from 'src/components/Canvas/hooks'
 import { useDebounce } from 'use-debounce'
 
 import { fabric } from 'fabric'
@@ -55,7 +55,7 @@ function ObjectsPanel() {
   return (
     <>
       <div style={{ padding: '1rem 2rem' }}>
-        <InputGroup>
+        {/* <InputGroup>
           <InputLeftElement pointerEvents="none" children={<SearchIcon color="gray.300" />} />
           <Input
             onChange={e => setSearch(e.target.value)}
@@ -63,7 +63,7 @@ function ObjectsPanel() {
             type="tel"
             placeholder="Search objects"
           />
-        </InputGroup>
+        </InputGroup> */}
       </div>
       <div style={{ padding: '0 2rem' }} className="objects-list">
         {renderItems()}

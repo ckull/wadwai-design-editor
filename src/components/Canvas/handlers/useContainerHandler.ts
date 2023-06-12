@@ -1,9 +1,9 @@
-import { useCanvasContext } from '@components/Canvas/hooks'
+import { useCanvasContext } from 'src/components/Canvas/hooks'
 import { createRef, useCallback, useEffect } from 'react'
-
+import useEditor from 'src/hooks/useEditor'
 function useContainerHandler() {
   const containerRef = createRef<HTMLDivElement>()
-  const { canvas } = useCanvasContext()
+  const { editor: {canvas} } = useEditor()
   const updateCanvasSize = useCallback(
     (x, y) => {
       if (canvas) {

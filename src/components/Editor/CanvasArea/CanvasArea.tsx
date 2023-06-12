@@ -1,5 +1,5 @@
 import "./CanvasArea.scss"
-import Canvas from "@components/Canvas"
+import Canvas from "src/components/Canvas"
 function CanvasArea() {
   return (
     <div className="canvasarea">

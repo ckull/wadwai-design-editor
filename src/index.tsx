@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom'
-import Editor from '@components/Editor'
+import Editor from './components/Editor'
 import reportWebVitals from './reportWebVitals'
-import { CanvasProvider } from '@components/Canvas'
+import { CanvasProvider } from './components/Canvas'
 import { ChakraProvider } from '@chakra-ui/react'
 
 import 'focus-visible/dist/focus-visible'

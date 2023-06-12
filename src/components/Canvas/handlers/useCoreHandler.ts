@@ -1,10 +1,12 @@
-import { useCanvasContext } from '@components/Canvas/hooks'
+import { useCanvasContext } from 'src/components/Canvas/hooks'
 import { useCallback } from 'react'
-import { CanvasObjects } from '@components/Canvas'
+import { CanvasObjects } from 'src/components/Canvas'
 import { propertiesToInclude } from '../constants/contants'
+import useEditor from 'src/hooks/useEditor'
 
 function useCoreHandler() {
-  const { canvas, activeObject } = useCanvasContext()
+  const { editor: {canvas, activeObject} } = useEditor()
+
 
   // Add objects to canvas
   const addObject = useCallback(

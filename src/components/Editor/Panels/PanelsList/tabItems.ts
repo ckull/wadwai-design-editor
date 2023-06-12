@@ -29,4 +29,9 @@ export const tabItems = [
     label: 'Videolar',
     name: 'videos',
   },
+  {
+    icon: 'videos',
+    label: 'Layers',
+    name: 'layers',
+  },
 ]

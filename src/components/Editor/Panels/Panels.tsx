@@ -5,8 +5,8 @@ import PanelItem from './PanelItem/PanelItem'
 import './Panels.scss'
 
 function Panels() {
-  const [panelOpen, setPanelOpen] = useState(true)
-  const [activeTab, setActiveTab] = useState('objects')
+  const [panelOpen, setPanelOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState('template')
 
   const closePanel = () => {
     setPanelOpen(!panelOpen)

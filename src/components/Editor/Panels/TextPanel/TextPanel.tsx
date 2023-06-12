@@ -1,6 +1,6 @@
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
-import { useCoreHandler } from '@/components/Canvas/handlers'
+import { useCoreHandler } from 'src/components/Canvas/handlers'
 
 function TextPanel() {
   const { addObject } = useCoreHandler()

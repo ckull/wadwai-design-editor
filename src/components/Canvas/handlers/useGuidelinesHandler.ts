@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { fabric } from 'fabric'
 import { ILineOptions } from 'fabric/fabric-impl'
-import { useCanvasContext } from '@components/Canvas/hooks'
-
+import { useCanvasContext } from 'src/components/Canvas/hooks'
+import useEditor from 'src/hooks/useEditor'
 function useGuidelinesHandler() {
-  const { canvas } = useCanvasContext()
+  const { editor: {canvas} } = useEditor()
   useEffect(() => {
     if (canvas) {
       let ctx = canvas.getSelectionContext(),

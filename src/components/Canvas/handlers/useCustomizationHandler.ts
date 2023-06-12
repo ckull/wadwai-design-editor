@@ -6,11 +6,11 @@ import {
   drawVerticalLineIcon,
   drawHorizontalLineIcon,
   drawRotateIcon,
-} from '@components/Canvas/utils'
-import { useCanvasContext } from '@components/Canvas/hooks'
-
+} from 'src/components/Canvas/utils'
+import { useCanvasContext } from 'src/components/Canvas/hooks'
+import useEditor from 'src/hooks/useEditor'
 function useCustomizationHandler() {
-  const { canvas } = useCanvasContext()
+  const { editor: {canvas} } = useEditor()
 
   /**
    * Customize fabric controls

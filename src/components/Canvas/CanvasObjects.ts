@@ -7,9 +7,9 @@ export const CanvasObjects = {
       return new fabric.Textbox(text, textOptions)
     },
   },
-  image: {
-    render: options => {
-      return new fabric.Image()
-    },
-  },
+  // image: {
+  //   render: options => {
+  //     return new fabric.Image()
+  //   },
+  // },
 }

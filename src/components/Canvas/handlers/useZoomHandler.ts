@@ -1,9 +1,9 @@
 import { fabric } from 'fabric'
 import { useCallback, useEffect } from 'react'
-import { useCanvasContext } from '@components/Canvas/hooks'
-
+import { useCanvasContext } from 'src/components/Canvas/hooks'
+import useEditor from 'src/hooks/useEditor'
 function useZoomHandler() {
-  const { canvas, zoomRatio } = useCanvasContext()
+  const { editor: {canvas, zoomRatio} } = useEditor()
 
   const updateZoom = useCallback(
     (zoomRatio: number) => {

@@ -1,10 +1,11 @@
 import { useCallback, useEffect } from 'react'
-import { useCanvasContext } from '@components/Canvas/hooks'
+import { useCanvasContext } from 'src/components/Canvas/hooks'
 import { isArrow, isCtrlShiftZ, isCtrlZ } from '../utils/keyboard'
-
+import useEditor from 'src/hooks/useEditor'
 function useEventHandlers() {
-  const { canvas, setActiveObject, activeObject, setZoomRatio } = useCanvasContext()
 
+  const {editor, setEditor} = useEditor()
+  const { canvas, activeObject } = editor
   /**
    * Canvas Mouse wheel handler
    */
@@ -19,7 +20,8 @@ function useEventHandlers() {
         } else {
           zoomRatio += 0.04
         }
-        setZoomRatio(zoomRatio)
+        // setZoomRatio(zoomRatio)
+        setEditor({...editor, zoomRatio})
       }
       event.e.preventDefault()
       event.e.stopPropagation()
@@ -46,10 +48,10 @@ function useEventHandlers() {
     ({ target }) => {
       if (target) {
         if (canvas) {
-          setActiveObject(canvas.getActiveObject())
+          setEditor({...editor, activeObject: canvas.getActiveObject()})
         }
       } else {
-        setActiveObject(null)
+        setEditor({...editor, activeObject: null})
       }
     },
     [canvas]

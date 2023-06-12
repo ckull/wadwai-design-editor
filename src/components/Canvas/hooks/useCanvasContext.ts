@@ -1,4 +1,4 @@
-import { Context } from '@components/Canvas'
+import { Context } from 'src/components/Canvas'
 import { useContext } from 'react'
 
 function useCanvasContext() {
