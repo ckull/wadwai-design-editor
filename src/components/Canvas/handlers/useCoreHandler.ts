@@ -35,7 +35,7 @@ function useCoreHandler() {
       // Create a fabric.Image from URL
       fabric.Image.fromURL(imageOptions.src, (img: fabric.Image) => {
         // Set additional options for the image object
-        img.set(imageOptions)
+        img.set({type: 'image', ...imageOptions})
     
 
         // Add the image object to the canvas

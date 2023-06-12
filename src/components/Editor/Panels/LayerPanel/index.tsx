@@ -16,9 +16,9 @@ function LayerPanel() {
   return (
     <>
       <div style={{ padding: '1rem 2rem' }}>
-        {objects.map(item => {
+        {objects?.map(item => {
           return (
-            <LayerItem label={item.id}/>
+            <LayerItem label={item.type}/>
           )
         })}
       </div>

@@ -38,6 +38,7 @@ function Canvas() {
     const workArea = new fabric.Rect({
       //@ts-ignore
       id: 'workarea',
+      type: 'workarea',
       width: 250,
       height: 400,
       absolutePositioned: true,

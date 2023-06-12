@@ -11,7 +11,7 @@ const useGrid = () => {
       stroke: 'rgba(43, 255, 1)',
       strokeWidth: 0.25,
       selectable: false,
-      id: 'grid',
+      type: 'grid',
     },
   }
 

@@ -22,7 +22,7 @@ const useObjects = () => {
 
     const onChanged = (changed: any) => {
         console.log('onchanged')
-        let filtered = canvas.getObjects().filter(item => item.id !== ('grid' || 'workarea'))
+        let filtered = canvas.getObjects().filter(item => item.type !== ('grid' || 'workarea'))
         console.log('filter: ', filtered)
         setEditor({
             ...editor, 
