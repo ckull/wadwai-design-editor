@@ -56,6 +56,7 @@ function Canvas() {
         canvas.width / shirtImage.getScaledWidth(),
         canvas.height / shirtImage.getScaledHeight()
       );
+      shirtImage.set({type: 'backgroundImage'})
       canvas.add(shirtImage);
       shirtImage.scale(shirtImageScaleFactor);
       shirtImage.lockMovementX = true
