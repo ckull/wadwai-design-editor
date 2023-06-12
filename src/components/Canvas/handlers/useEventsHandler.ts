@@ -34,7 +34,7 @@ function useEventHandlers() {
   const onDeleteKey = useCallback((event) => {
     // Key codes for backspace and delete keys
     if (canvas && event.keyCode === 8 || event.keyCode === 46) {
-      removeObject()
+      canvas.remove(canvas.getActiveObject())
     }
   }, [canvas])
 
