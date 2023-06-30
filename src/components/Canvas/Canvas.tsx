@@ -22,34 +22,60 @@ function Canvas() {
   useGuidelinesHandler()
   useEventsHandler()
   useZoomHandler()
-  useGrid()
+  // useGrid()
   useObjects()
   useEffect(() => {
-    const initialHeigh = containerRef.current.clientHeight
-    const initialWidth = containerRef.current.clientWidth
+    const screenHeight = containerRef.current.clientHeight
+    const screenWidth = containerRef.current.clientWidth
+    const workAreaWidth = 4500
+    const workAreaHeight = 5400
 
     const canvas = new fabric.Canvas('canvas', {
       backgroundColor: '#ecf0f1',
-      height: initialHeigh,
-      width: initialWidth,
+      height: screenHeight,
+      width: screenWidth,
     })
 
-   
+    const zoomRatio = Math.min(screenWidth / workAreaWidth, screenHeight / workAreaHeight);
+    const center = canvas.getCenter();
+    const centerPoint = new fabric.Point(center.left, center.top);
+
     const workArea = new fabric.Rect({
       //@ts-ignore
       id: 'workarea',
       type: 'workarea',
-      width: 250,
-      height: 400,
-      absolutePositioned: true,
-      stroke: 'white',
+      width: workAreaWidth,
+      height: workAreaHeight,
+      // absolutePositioned: true,
       fill: 'transparent',
-      strokeWidth: 1,
       selectable: false,
       hoverCursor: 'default',
       objectCaching: false,
       controlsAboveOverlay: true,
+      backgroundColor: 'white',
     })
+
+    canvas.add(workArea)
+    workArea.center()
+
+
+    console.log('zoomRatio: ', zoomRatio)
+
+    // canvas.setZoom(zoomRatio);
+    canvas.zoomToPoint(centerPoint, zoomRatio*0.9);
+
+
+    canvas.renderAll()
+
+ 
+
+    // const canvasCenterX = workAreaWidth * zoomRatio / 2;
+    // const canvasCenterY = workAreaHeight * zoomRatio / 2;
+    // canvas.absolutePan({
+    //   x: canvasCenterX,
+    //   y: canvasCenterY
+    // });
+ 
 
     fabric.Image.fromURL(backgroundImage, (shirtImage) => {
       let shirtImageScaleFactor = Math.min(
@@ -66,8 +92,6 @@ function Canvas() {
       shirtImage.center()
     })
 
-    canvas.add(workArea)
-    workArea.center()
 
     setEditor({
       ...editor,

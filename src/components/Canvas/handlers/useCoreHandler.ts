@@ -35,17 +35,30 @@ function useCoreHandler() {
       // Create a fabric.Image from URL
       fabric.Image.fromURL(imageOptions.src, (img: fabric.Image) => {
         // Set additional options for the image object
-        img.set({type: 'image', ...imageOptions})
-    
+        let rFilter = new fabric.Image.filters.Resize({
+          resizeType: 'lanczos',
+          lanczosLobes: 3,
+        
+        })
 
+        img.resizeFilter =[rFilter]
+        img.applyResizeFilters()
+        canvas.renderAll()
+
+        img.set({type: 'image', 
+          ...imageOptions,
+          scaleX: 2,
+          scaleY: 2,
+        })
+    
         // Add the image object to the canvas
         canvas.add(img)
         img.center()
-
+        // img.scale(2)
         img.clipPath = workarea
         canvas.renderAll()
         setEditor({...editor, canvas: canvas})
-      })
+      } ,{ crossOrigin: 'anonymous'})
     },
     [canvas]
   )
