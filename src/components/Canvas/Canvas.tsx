@@ -27,22 +27,22 @@ function Canvas() {
   useEffect(() => {
     const screenHeight = containerRef.current.clientHeight
     const screenWidth = containerRef.current.clientWidth
-    const dimensionWidth = 711
-    const dimensionHeight = 720
+    const dimensionWidth = 4800
+    const dimensionHeight = 5400
 
-    const workAreaAspectRatio = dimensionWidth/dimensionHeight
+    // const workAreaAspectRatio = dimensionWidth/dimensionHeight
 
-    let workAreaWidth, workAreaHeight;
+    // let workAreaWidth, workAreaHeight;
 
-    if (screenWidth / screenHeight > workAreaAspectRatio) {
-      workAreaWidth = screenHeight * workAreaAspectRatio;
-      workAreaHeight = screenHeight;
-    } else {
-      workAreaWidth = screenWidth;
-      workAreaHeight = screenWidth / workAreaAspectRatio;
-    }
+    // if (screenWidth / screenHeight > workAreaAspectRatio) {
+    //   workAreaWidth = screenHeight * workAreaAspectRatio;
+    //   workAreaHeight = screenHeight;
+    // } else {
+    //   workAreaWidth = screenWidth;
+    //   workAreaHeight = screenWidth / workAreaAspectRatio;
+    // }
 
-    console.log(workAreaWidth, workAreaHeight, workAreaAspectRatio)
+    // console.log(workAreaWidth, workAreaHeight, workAreaAspectRatio)
 
     const canvas = new fabric.Canvas('canvas', {
       backgroundColor: '#ecf0f1',
@@ -50,7 +50,7 @@ function Canvas() {
       width: screenWidth,
     })
 
-    const zoomRatio = Math.min(screenWidth / workAreaWidth, screenHeight / workAreaHeight);
+    const zoomRatio = Math.min(screenWidth / dimensionWidth, screenHeight / dimensionHeight);
     const center = canvas.getCenter();
     const centerPoint = new fabric.Point(center.left, center.top);
 
@@ -58,14 +58,15 @@ function Canvas() {
       //@ts-ignore
       id: 'workarea',
       type: 'workarea',
-      width: workAreaWidth,
-      height: workAreaHeight,
+      width: dimensionWidth,
+      height: dimensionHeight,
       absolutePositioned: true,
+       stroke: 'transparent', // Set the stroke to 'transparent' or null
+      strokeWidth: 0, // Set the strokeWidth to 0
       fill: 'transparent',
       selectable: false,
       hoverCursor: 'default',
-      objectCaching: false,
-      controlsAboveOverlay: true,
+      objectCaching: true,
       backgroundColor: 'white',
     })
 
@@ -73,16 +74,16 @@ function Canvas() {
     workArea.center()
     
 
-    const scaleRatio = dimensionWidth / workAreaWidth;
-    console.log('scaleRatio: ', scaleRatio)
+    // const scaleRatio = dimensionWidth / workAreaWidth;
+    // console.log('scaleRatio: ', scaleRatio)
 
-    console.log('zoomRatio: ', zoomRatio)
+    // console.log('zoomRatio: ', zoomRatio)
 
     workArea.set({
-      scaleRatio: scaleRatio
+      scaleRatio: 1
     })
     // canvas.setZoom(zoomRatio);
-    canvas.zoomToPoint(centerPoint, 0.9);
+    canvas.zoomToPoint(centerPoint, zoomRatio);
 
 
     canvas.renderAll()
@@ -113,7 +114,7 @@ function Canvas() {
       workArea.set({
         width: screenWidth,
         height: screenHeight,
-        scaleRatio: scaleRatio
+        // scaleRatio: scaleRatio
       })
 
       setEditor({
@@ -123,7 +124,7 @@ function Canvas() {
       })
     }
 
-    canvas.on('resize', handleResize)
+    // canvas.on('resize', handleResize)
  
 
     // fabric.Image.fromURL(backgroundImage, (shirtImage) => {

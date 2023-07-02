@@ -93,7 +93,7 @@ export default function () {
           type: 'Image',
           prevScale: scaleRatio,
           dpi: 100,
-          scaled: scaleRatio,
+          scaled: 1,
           objectCaching: true,
         })
 
@@ -103,13 +103,13 @@ export default function () {
 
         // var scaleFactor = canvas.workare.width / img.width;
 
-        img.scale(scaleRatio)
+        // img.scale(scaleRatio)
          
        
       
        
-        canvas.canvas.add(img)
-        // canvas.canvas.renderAll()
+        // canvas.canvas.add(img)
+        canvas.canvas.renderAll()
         img.center()
 
       //   canvas.canvas.on('before:render', function() {
@@ -142,15 +142,15 @@ export default function () {
         </Block>
         {/* <Scrollable> */}
           <Block padding={"0 1.5rem"} className="overflow-auto">
-            <Button
+            <button
               onClick={handleInputFileRefClick}
-              size={SIZE.compact}
-              kind={KIND.secondary}
-              isLoading={isLoading}
+              // size={SIZE.compact}
+              // kind={KIND.secondary}
+              // isLoading={isLoading}
               
             >
               Computer
-            </Button>
+            </button>
             <input onChange={handleFileInput} type="file" id="file" ref={inputFileRef} style={{ display: "none" }} />
 
             <div

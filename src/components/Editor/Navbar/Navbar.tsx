@@ -1,30 +1,46 @@
 import './Navbar.scss'
 import { DownloadIcon, LogoIcon, GithubIcon } from './NavbarIcons'
 import useEditor from 'src/hooks/useEditor'
+import { fabric } from 'fabric'
 function Navbar() {
   const { editor } = useEditor()
 
   const handleDownload = () => {
-    if(editor) {
+
       const { canvas, workArea } = editor
 
-      canvas.clipTo = function (ctx) {
-        ctx.rect(
-          workArea.left,
-          workArea.top,
-          workArea.width,
-          workArea.height
-        );
-      };
+      const workarea = canvas.getObjects().find(obj => obj.id === 'workarea')
 
-      console.log('editor: ', canvas)
+      // canvas.clipTo = function (ctx: any) {
+      //   workarea.render(ctx);
+      // };
+
       const dataUrl = canvas.toDataURL({
         format: 'png',
-        multiplier: workArea.scaleRatio,
+        // multiplier: workArea.scaleRatio,
+        left: workArea.left,
+        top: workArea.top,
+        width: workArea.width,
+        height: workArea.height,
       });
 
-      canvas.clipTo = null;
 
+      // console.log('workArea: ', workarea)
+      // const tempCanvas = new fabric.Canvas('temp', {
+      //   height: workarea.height,
+      //   width: workarea.width,
+      // })
+
+      // tempCanvas.add(workarea);
+      // tempCanvas.renderAll()
+      // workarea.center()
+
+      //  const dataUrl = tempCanvas.toDataURL({
+      //   format: 'png',
+      //   multiplier: workArea.scaleRatio,
+      //   enableRetinaScaling: false,
+      // });
+    
 
       const a = document.createElement('a');
       a.href = dataUrl;
@@ -32,7 +48,11 @@ function Navbar() {
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    }
+     
+      
+
+     
+    
   }
 
   return (

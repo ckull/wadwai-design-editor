@@ -45,24 +45,24 @@ function useCoreHandler() {
         // img.applyResizeFilters()
         // canvas.renderAll()
 
-        console.log(img.width, img.height, workArea.scaleRatio)
+   
+       
+
+        // img.scaleToWidth(1)
+        // img.scaleToHeight(1)
 
         img.set({type: 'image', 
-          ...imageOptions,
-        })
-
-        img.scaleToWidth(img.width/workArea.scaleRatio)
-        img.scaleToHeight(img.height/workArea.scaleRatio)
-
-        console.log('scale down: ', 1/workArea.scaleRatio)
-    
-        let scaleDown = 1/workArea.scaleRatio
-        // Add the image object to the canvas
+        ...imageOptions,
+          // left: workArea.left + offsetX,
+          // top: workArea.top + offsetY,
+      })
+     
         canvas.add(img)
         img.center()
         // img.scale(0.3)
         img.clipPath = workarea
-        // canvas.renderAll()
+        console.log('img: ', img)
+        canvas.renderAll()
         setEditor({...editor, canvas: canvas})
       } ,{ crossOrigin: 'anonymous'})
     },
