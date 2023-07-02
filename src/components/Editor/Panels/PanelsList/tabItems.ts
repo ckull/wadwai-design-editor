@@ -25,6 +25,11 @@ export const tabItems = [
     name: 'musics',
   },
   {
+    icon: 'uploads',
+    label: 'Uploads',
+    name: 'uploads',
+  },
+  {
     icon: 'videos',
     label: 'Videolar',
     name: 'videos',

@@ -80,6 +80,9 @@ const PanelIcons = {
   images: {
     render: () => <ImageIcon />,
   },
+  uploads: {
+    render: () => <ImageIcon />,
+  },
   videos: {
     render: () => <VideoIcon />,
   },

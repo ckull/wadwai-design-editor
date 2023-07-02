@@ -29,7 +29,7 @@ function useCoreHandler() {
   const addImage = useCallback(
     options => {
       const { type, ...imageOptions } = options
-      const element = CanvasObjects[type].render(imageOptions)
+      // const element = CanvasObjects[type].render(imageOptions)
 
       const workarea = canvas.getObjects().find(obj => obj.id === 'workarea')
       // Create a fabric.Image from URL
@@ -41,22 +41,28 @@ function useCoreHandler() {
         
         })
 
-        img.resizeFilter =[rFilter]
-        img.applyResizeFilters()
-        canvas.renderAll()
+        // img.resizeFilter =[rFilter]
+        // img.applyResizeFilters()
+        // canvas.renderAll()
+
+        console.log(img.width, img.height, workArea.scaleRatio)
 
         img.set({type: 'image', 
           ...imageOptions,
-          scaleX: 2,
-          scaleY: 2,
         })
+
+        img.scaleToWidth(img.width/workArea.scaleRatio)
+        img.scaleToHeight(img.height/workArea.scaleRatio)
+
+        console.log('scale down: ', 1/workArea.scaleRatio)
     
+        let scaleDown = 1/workArea.scaleRatio
         // Add the image object to the canvas
         canvas.add(img)
         img.center()
-        // img.scale(2)
+        // img.scale(0.3)
         img.clipPath = workarea
-        canvas.renderAll()
+        // canvas.renderAll()
         setEditor({...editor, canvas: canvas})
       } ,{ crossOrigin: 'anonymous'})
     },

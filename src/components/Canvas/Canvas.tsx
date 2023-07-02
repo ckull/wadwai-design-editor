@@ -27,8 +27,22 @@ function Canvas() {
   useEffect(() => {
     const screenHeight = containerRef.current.clientHeight
     const screenWidth = containerRef.current.clientWidth
-    const workAreaWidth = 4500
-    const workAreaHeight = 5400
+    const dimensionWidth = 711
+    const dimensionHeight = 720
+
+    const workAreaAspectRatio = dimensionWidth/dimensionHeight
+
+    let workAreaWidth, workAreaHeight;
+
+    if (screenWidth / screenHeight > workAreaAspectRatio) {
+      workAreaWidth = screenHeight * workAreaAspectRatio;
+      workAreaHeight = screenHeight;
+    } else {
+      workAreaWidth = screenWidth;
+      workAreaHeight = screenWidth / workAreaAspectRatio;
+    }
+
+    console.log(workAreaWidth, workAreaHeight, workAreaAspectRatio)
 
     const canvas = new fabric.Canvas('canvas', {
       backgroundColor: '#ecf0f1',
@@ -46,7 +60,7 @@ function Canvas() {
       type: 'workarea',
       width: workAreaWidth,
       height: workAreaHeight,
-      // absolutePositioned: true,
+      absolutePositioned: true,
       fill: 'transparent',
       selectable: false,
       hoverCursor: 'default',
@@ -57,41 +71,75 @@ function Canvas() {
 
     canvas.add(workArea)
     workArea.center()
+    
 
+    const scaleRatio = dimensionWidth / workAreaWidth;
+    console.log('scaleRatio: ', scaleRatio)
 
     console.log('zoomRatio: ', zoomRatio)
 
+    workArea.set({
+      scaleRatio: scaleRatio
+    })
     // canvas.setZoom(zoomRatio);
-    canvas.zoomToPoint(centerPoint, zoomRatio*0.9);
+    canvas.zoomToPoint(centerPoint, 0.9);
 
 
     canvas.renderAll()
 
+
+    const handleResize = () => {
+      const screenHeight = containerRef.current.clientHeight
+      const screenWidth = containerRef.current.clientWidth
+      let workAreaWidth, workAreaHeight;
+
+      if (screenWidth / screenHeight > workAreaAspectRatio) {
+        workAreaWidth = screenHeight * workAreaAspectRatio;
+        workAreaHeight = screenHeight;
+      } else {
+        workAreaWidth = screenWidth;
+        workAreaHeight = screenWidth / workAreaAspectRatio;
+      }
+
+      const scaleRatio = dimensionWidth / workAreaWidth;
+
+      console.log('canvas scaleRatio: ', scaleRatio)
+      // Update the canvas dimensions to match the container
+      canvas.setDimensions({
+        width: screenWidth,
+        height: screenHeight,
+      });
+
+      workArea.set({
+        width: screenWidth,
+        height: screenHeight,
+        scaleRatio: scaleRatio
+      })
+
+      setEditor({
+        ...editor,
+        canvas: canvas,
+        workArea: workArea
+      })
+    }
+
+    canvas.on('resize', handleResize)
  
 
-    // const canvasCenterX = workAreaWidth * zoomRatio / 2;
-    // const canvasCenterY = workAreaHeight * zoomRatio / 2;
-    // canvas.absolutePan({
-    //   x: canvasCenterX,
-    //   y: canvasCenterY
-    // });
- 
-
-    fabric.Image.fromURL(backgroundImage, (shirtImage) => {
-      let shirtImageScaleFactor = Math.min(
-        canvas.width / shirtImage.getScaledWidth(),
-        canvas.height / shirtImage.getScaledHeight()
-      );
-      shirtImage.set({type: 'backgroundImage'})
-      canvas.add(shirtImage);
-      shirtImage.scale(shirtImageScaleFactor);
-      shirtImage.lockMovementX = true
-      shirtImage.sendToBack()
-      shirtImage.selectable = false;
-      shirtImage.lockMovementY = true
-      shirtImage.center()
-    })
-
+    // fabric.Image.fromURL(backgroundImage, (shirtImage) => {
+    //   let shirtImageScaleFactor = Math.min(
+    //     canvas.width / shirtImage.getScaledWidth(),
+    //     canvas.height / shirtImage.getScaledHeight()
+    //   );
+    //   shirtImage.set({type: 'backgroundImage'})
+    //   canvas.add(shirtImage);
+    //   shirtImage.scale(shirtImageScaleFactor);
+    //   shirtImage.lockMovementX = true
+    //   shirtImage.sendToBack()
+    //   shirtImage.selectable = false;
+    //   shirtImage.lockMovementY = true
+    //   shirtImage.center()
+    // })
 
     setEditor({
       ...editor,
@@ -99,6 +147,8 @@ function Canvas() {
       workArea: workArea
     })
   }, [])
+
+ 
 
   useEffect(() => {
     if(editor) {

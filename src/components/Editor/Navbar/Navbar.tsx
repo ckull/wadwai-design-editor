@@ -6,12 +6,24 @@ function Navbar() {
 
   const handleDownload = () => {
     if(editor) {
-      const { canvas } = editor
+      const { canvas, workArea } = editor
+
+      canvas.clipTo = function (ctx) {
+        ctx.rect(
+          workArea.left,
+          workArea.top,
+          workArea.width,
+          workArea.height
+        );
+      };
 
       console.log('editor: ', canvas)
       const dataUrl = canvas.toDataURL({
         format: 'png',
+        multiplier: workArea.scaleRatio,
       });
+
+      canvas.clipTo = null;
 
 
       const a = document.createElement('a');
