@@ -6,8 +6,8 @@ import useEditor from "src/hooks/useEditor"
 import { toBase64 } from "src/utils/data"
 import { fabric } from "fabric"
 import { nanoid } from "nanoid"
-// import getMetadata from "~/actions/getMetadata"
-// import { metadataProps } from "~/actions/getMetadata"
+import getMetadata from "src/actions/getMetadata"
+import { metadataProps } from "src/actions/getMetadata"
 import { lanczosFilter } from "src/utils/filters"
 import { useCoreHandler } from "src/components/Canvas/handlers"
 export default function () {
@@ -62,13 +62,13 @@ export default function () {
   }
 
   const addObject = React.useCallback(
-    (url: string) => {
+    (url: string, option: object) => {
       if (editor) {
-        const options = {
-          type: "Image",
+     
+        addImage({
           src: url,
-        }
-        addImage(options)
+          ...option
+        })
       }
     },
     [editor]
@@ -77,44 +77,25 @@ export default function () {
   const handleAddImage = async (imgSrc: string) => {
     try {
       setIsLoading(true)
-      // const metadata:metadataProps = await getMetadata(imgSrc)
+      const metadata:metadataProps = await getMetadata(imgSrc)
 
-      console.log('add Image src: ', imgSrc)
+      console.log('metadata: ', metadata)
       fabric.Image.fromURL(imgSrc, (img: fabric.Image) => {
-        let scaleRatio = 300 / 100
-       
-        // img.resizeFilter = new fabric.Image.filters.Resize({
-        //   resizeType: 'lanzcos'
-        // })
-        // img.applyResizeFilters();
-        
-          
-        img.set({
-          type: 'Image',
-          prevScale: scaleRatio,
-          dpi: 100,
-          scaled: 1,
-          objectCaching: true,
-        })
-
-
-        addObject(imgSrc)
-
-
-        // var scaleFactor = canvas.workare.width / img.width;
-
-        // img.scale(scaleRatio)
+        let dpi = metadata.density
+        let scaleRatio = 300 / dpi
+     
+        img.scale(scaleRatio)
          
        
-      
+        addObject(imgSrc, {
+          dpi: dpi,
+          scaled: scaleRatio,
+          objectCaching: true,
+        })
        
-        // canvas.canvas.add(img)
-        canvas.canvas.renderAll()
+        canvas.renderAll()
         img.center()
 
-      //   canvas.canvas.on('before:render', function() {
-      //     img.applyResizeFilters()
-      //  })
       })
     } catch (err) {
 
@@ -141,16 +122,15 @@ export default function () {
         
         </Block>
         {/* <Scrollable> */}
-          <Block padding={"0 1.5rem"} className="overflow-auto">
-            <button
+          <Block padding={"0 1.5rem"} className="min-w-[280px]">
+            <Button
               onClick={handleInputFileRefClick}
-              // size={SIZE.compact}
-              // kind={KIND.secondary}
-              // isLoading={isLoading}
-              
+              size={SIZE.compact}
+              isLoading={isLoading}     
+              className="w-full"        
             >
               Computer
-            </button>
+            </Button>
             <input onChange={handleFileInput} type="file" id="file" ref={inputFileRef} style={{ display: "none" }} />
 
             <div

@@ -31,7 +31,7 @@ const ImageItem = ({ src }: {  src: any }) => {
   const handleAddObject = useCallback(() => {
     console.log('add object: ', src.large)
     addImage({
-      type: 'image',
+      type: 'Image',
       src: src.medium
     })
   }, [])

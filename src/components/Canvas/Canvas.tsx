@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import useCanvasContext from 'src/components/Canvas/hooks/useCanvasContext'
 import { fabric } from 'fabric'
 import useEditor from 'src/hooks/useEditor'
-
+import { imageCalculate } from './utils/imageCalculate'
 import {
   useCustomizationHandler,
   useEventsHandler,
@@ -12,18 +12,20 @@ import {
   useGrid,
   useObjects
 } from 'src/components/Canvas/handlers'
-
+import ObjectInfo from '../Objects/Info'
 function Canvas() {
   const containerRef = useContainerHandler()
   const { setCanvas } = useCanvasContext()
   const { editor , setEditor } = useEditor()
-  const { backgroundImage } = editor
+  const { backgroundImage, activeObject } = editor
+
   useCustomizationHandler()
   useGuidelinesHandler()
   useEventsHandler()
   useZoomHandler()
   // useGrid()
   useObjects()
+
   useEffect(() => {
     const screenHeight = containerRef.current.clientHeight
     const screenWidth = containerRef.current.clientWidth
@@ -31,18 +33,15 @@ function Canvas() {
     const dimensionHeight = 5400
 
     // const workAreaAspectRatio = dimensionWidth/dimensionHeight
-
-    // let workAreaWidth, workAreaHeight;
-
     // if (screenWidth / screenHeight > workAreaAspectRatio) {
-    //   workAreaWidth = screenHeight * workAreaAspectRatio;
-    //   workAreaHeight = screenHeight;
+    //   dimensionWidth = screenHeight * workAreaAspectRatio;
+    //   dimensionHeight = screenHeight;
     // } else {
-    //   workAreaWidth = screenWidth;
-    //   workAreaHeight = screenWidth / workAreaAspectRatio;
+    //   dimensionWidth = screenWidth;
+    //   dimensionHeight = screenWidth / workAreaAspectRatio;
     // }
 
-    // console.log(workAreaWidth, workAreaHeight, workAreaAspectRatio)
+    // const scaleRatio = dimensionWidth / screenWidth;
 
     const canvas = new fabric.Canvas('canvas', {
       backgroundColor: '#ecf0f1',
@@ -70,23 +69,23 @@ function Canvas() {
       backgroundColor: 'white',
     })
 
+
+    // workArea.set({
+    //   scaleRatio: zoomRatio
+    // })
+
+    console.log('zoomRatio: ', zoomRatio)
+
     canvas.add(workArea)
     workArea.center()
-    
 
-    // const scaleRatio = dimensionWidth / workAreaWidth;
-    // console.log('scaleRatio: ', scaleRatio)
 
-    // console.log('zoomRatio: ', zoomRatio)
-
-    workArea.set({
-      scaleRatio: 1
-    })
-    // canvas.setZoom(zoomRatio);
     canvas.zoomToPoint(centerPoint, zoomRatio);
 
 
     canvas.renderAll()
+
+  
 
 
     const handleResize = () => {
@@ -145,7 +144,8 @@ function Canvas() {
     setEditor({
       ...editor,
       canvas: canvas,
-      workArea: workArea
+      workArea: workArea,
+      zoomRatio: zoomRatio
     })
   }, [])
 
@@ -157,7 +157,8 @@ function Canvas() {
     }
   }, [editor])
   return (
-    <div className="editor-canvas flex justify-center" ref={containerRef}>
+    <div className="editor-canvas flex justify-center relative" ref={containerRef}>
+      <ObjectInfo isShow={true}/>
       <canvas id="canvas"></canvas>
     </div>
   )

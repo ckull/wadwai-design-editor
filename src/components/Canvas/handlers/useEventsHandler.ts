@@ -3,6 +3,7 @@ import { useCanvasContext } from 'src/components/Canvas/hooks'
 import { isArrow, isCtrlShiftZ, isCtrlZ } from '../utils/keyboard'
 import useEditor from 'src/hooks/useEditor'
 import useCoreHandler from './useCoreHandler'
+import { imageCalculate } from '../utils/imageCalculate'
 function useEventHandlers() {
 
   const {editor, setEditor} = useEditor()
@@ -38,13 +39,49 @@ function useEventHandlers() {
     }
   }, [canvas])
 
+  const handleImageScale = useCallback((event) => {
+    if(canvas && event.target.type === 'Image') {
+ 
+        console.log('image scale')
+        let { target, transform } = event
+        let {width, height, dpi} = imageCalculate(target, transform)
+      
+        // const activeObject = canvas.getActiveObject()
+        
+       
+        // activeObject.set({
+        //   width,
+        //   height,
+        //   dpi,
+        // })
+
+     
+        setEditor((prevEditor) => ({
+          ...prevEditor,
+          activeObject: {
+            ...prevEditor.activeObject,
+            width,
+            height,
+            dpi
+          }
+        }))
+     
+        target.applyFilters();
+      
+    }
+  
+  }, [canvas])
+
   useEffect(() => {
     if (canvas) {
       canvas.on('mouse:wheel', onMouseWheel)
+      canvas.on('object:modified', handleImageScale)
     }
     return () => {
       if (canvas) {
         canvas.off('mouse:wheel', onMouseWheel)
+        canvas.off('object:modified', handleImageScale)
+
       }
     }
   }, [canvas])

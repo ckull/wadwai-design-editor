@@ -41,9 +41,9 @@ function useCoreHandler() {
         
         })
 
-        // img.resizeFilter =[rFilter]
-        // img.applyResizeFilters()
-        // canvas.renderAll()
+        img.filters =[rFilter]
+        img.applyFilters()
+        canvas.renderAll()
 
    
        
@@ -51,7 +51,7 @@ function useCoreHandler() {
         // img.scaleToWidth(1)
         // img.scaleToHeight(1)
 
-        img.set({type: 'image', 
+        img.set({type: 'Image', 
         ...imageOptions,
           // left: workArea.left + offsetX,
           // top: workArea.top + offsetY,
@@ -61,7 +61,7 @@ function useCoreHandler() {
         img.center()
         // img.scale(0.3)
         img.clipPath = workarea
-        console.log('img: ', img)
+ 
         canvas.renderAll()
         setEditor({...editor, canvas: canvas})
       } ,{ crossOrigin: 'anonymous'})

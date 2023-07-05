@@ -1,23 +1,28 @@
-import ReactDOM from 'react-dom'
+import ReactDOM from "react-dom/client"
 import Editor from './components/Editor'
 import reportWebVitals from './reportWebVitals'
 import { CanvasProvider } from './components/Canvas'
 import { ChakraProvider } from '@chakra-ui/react'
-
+import { Client as Styletron } from 'styletron-engine-atomic';
+import { Provider as StyletronProvider } from 'styletron-react';
+import { LightTheme, BaseProvider } from 'baseui';
+import ModalProvider from './providers/modals'
 import 'focus-visible/dist/focus-visible'
 import './i18n/index'
 import './index.css'
 
-ReactDOM.render(
-  <CanvasProvider>
-    <ChakraProvider>
-      <Editor />
-    </ChakraProvider>
-  </CanvasProvider>,
-  document.getElementById('root')
-)
+const engine = new Styletron();
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <CanvasProvider>
+    <StyletronProvider value={engine}>
+      <BaseProvider theme={LightTheme}>
+        <ModalProvider>
+          <ChakraProvider>
+            <Editor />
+          </ChakraProvider>
+        </ModalProvider>
+      </BaseProvider>
+    </StyletronProvider>
+  </CanvasProvider>
+)
