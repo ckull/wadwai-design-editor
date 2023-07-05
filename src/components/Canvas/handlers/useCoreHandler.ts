@@ -41,8 +41,11 @@ function useCoreHandler() {
         
         })
 
-        img.filters =[rFilter]
-        img.applyFilters()
+        // img.filters =[rFilter]
+        // img.applyFilters()
+        img.resizeFilter = rFilter
+        img.applyResizeFilters()
+
         canvas.renderAll()
 
    
